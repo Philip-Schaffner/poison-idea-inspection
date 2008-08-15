@@ -1,9 +1,10 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin>
+<idea-plugin url="http://code.google.com/p/poison-idea-inspection">
   <name>Poison Inspection</name>
   <description>Inspection looking for field access bypassing setter/getter</description>
   <version>0.1</version>
-  <vendor>Slawomir Ginter</vendor>
+  <vendor email="Slawomir.Ginter@spartez.com" url="http://spartez.com">Slawomir Ginter</vendor>
+  <category>inspection</category>
   <idea-version since-build="7000"/>
 
 	<application-components>
