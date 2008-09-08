@@ -1,0 +1,71 @@
+==How does it work?==
+Any field that has a getter (or setter) is made poisonous for read (or write) references.
+
+Getters and setters are identified using JavaBean naming convention.
+
+A trivial getter is a one consisting of single return statement returning field value.
+
+A trivial setter contains only one assignment statement of its parameter to the field.
+
+If the field contains a trivial setter (getter), it is no longer poisonous (otherwise you would be warned to use a getter that is defined just to widen the access scope of a field)
+
+===Trivial Example===
+{{{
+private int field;
+
+// trivial getter
+public int getField() {
+    return field;
+}
+
+//trivial setter
+public void setField(int i) {
+    field = i;
+}
+
+public void someMethod() {
+    field = field + 1; // fine
+}
+}}}
+
+===Non-Trivial Example===
+{{{
+private int field;
+
+// non-trivial getter
+public int getField() {
+    return field > 0 ? field : 0;
+}
+
+private int oldField;
+
+//non-trivial setter
+public void setField(int i) {
+    oldField = field;
+    field = i;
+}
+
+public void someMethod() {
+    int a = field; // warning - bypasses non-trivial getField()
+    field = 1;     // warning - bypasses non-trivial setField()
+}
+}}}
+
+===Mixed Example===
+{{{
+private int field;
+
+//trivial setter
+public void setField(int i) {
+    field = i;
+}
+
+//non-trivial setter
+public void setField(int i, int j) {
+    field = i > j ? i : j;
+}
+
+public void someMethod() {
+    field = 1; // that's fine - there is a trivial setter available, so no warning
+}
+}}}
